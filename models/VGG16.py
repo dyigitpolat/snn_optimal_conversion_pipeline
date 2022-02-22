@@ -125,7 +125,7 @@ class VGG16(nn.Module):
         return output
 
     def record(self):
-        return np.array(self.max_active)
+        return np.array(torch.tensor(self.max_active).cpu())
 
     def load_max_active(self, mat):
         self.max_active = mat

@@ -75,7 +75,7 @@ if __name__ == "__main__":
     best_acc = 0
     best_epoch = 0
     
-    
+    train_loader, train_dataset = dataset()
     
     if args.thresh > 0:
         relu_th = True
@@ -142,7 +142,7 @@ if __name__ == "__main__":
             best_acc = acc
             best_epoch = epoch + 1
             torch.save(ann.module.state_dict(), model_save_name)
-            best_max_act = ann.record()
+            best_max_act = ann.module.record()
             # np.save(activation_save_name, best_max_act)
         print('best_acc is: ', best_acc, ' find in epoch: ', best_epoch)
         print('Iters:', epoch, '\n\n\n')
