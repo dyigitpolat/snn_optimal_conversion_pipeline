@@ -5,3 +5,4 @@ from .cnn2 import *
 from .VGG16 import *
 from .ResNet20 import *
 from .CifarNet import *
+from .SimpleMLP import *

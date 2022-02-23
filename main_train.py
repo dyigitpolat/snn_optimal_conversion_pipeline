@@ -87,6 +87,8 @@ if __name__ == "__main__":
         ann = VGG16(relu_th)
     elif args.arch == 'ResNet20':
         ann = ResNet20(relu_th)
+    elif args.arch == 'SimpleMLP':
+        ann = SimpleMLP(relu_th)
     else:
         ann = CIFARNet(relu_th)
     ann = torch.nn.DataParallel(ann)

@@ -5,7 +5,7 @@ parser = argparse.ArgumentParser(description='model parameters', formatter_class
 parser.add_argument('--dataset', default='CIFAR100', type=str, help='dataset name',
                     choices=['MNIST', 'CIFAR10', 'CIFAR100'])
 parser.add_argument('--arch', default='VGG16', type=str, help='dataset name',
-                    choices=['VGG16', 'ResNet20', 'CIFARNet'])
+                    choices=['VGG16', 'ResNet20', 'CIFARNet', 'SimpleMLP'])
 parser.add_argument('--batch_size', default=128, type=int, help='minibatch size')
 parser.add_argument('--learning_rate', default=1e-3, type=float, help='initial learning_rate')
 parser.add_argument('--epochs', default=200, type=int, help='number of training epochs')
