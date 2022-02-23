@@ -50,3 +50,43 @@ class SimpleMLP(nn.Module):
 
     def load_max_active(self, mat):
         self.max_active = mat
+
+
+class SimpleMLP_spiking(nn.Module):
+    def __init__(self, thresh_list, model):
+        super(SimpleMLP_spiking, self).__init__()
+
+        height = 32
+        width = 32
+        channels = 3
+
+        self.fc0 = SPIKE_layer(thresh_list[0], model.fc0)
+        self.fc1 = SPIKE_layer(thresh_list[1], model.fc1)
+        self.fc2 = SPIKE_layer(thresh_list[2], model.fc2)
+        self.fc3 = SPIKE_layer(thresh_list[3], model.fc3)
+
+        self.T = args.T
+
+    def init_layer(self):
+        self.fc0.init_mem()
+        self.fc1.init_mem()
+        self.fc2.init_mem()
+        self.fc3.init_mem()
+
+    def forward(self, x):
+        self.init_layer()
+        with torch.no_grad():
+            out_spike_sum = 0
+            result_list = []
+            for time in range(self.T):
+                spike_input = x
+                output = spike_input.view(x.size(0), -1)
+                output = self.fc0(output)
+                output = self.fc1(output)
+                output = self.fc2(output)
+                output = self.fc3(output)
+                out_spike_sum += output
+                if (time + 1) % args.step == 0:
+                    sub_result = out_spike_sum / (time + 1)
+                    result_list.append(sub_result)
+        return result_list

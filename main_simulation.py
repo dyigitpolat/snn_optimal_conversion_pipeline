@@ -11,7 +11,7 @@ from main_train import dataset
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = args.batch_size
 activation_save_name = args.arch + '_' + args.dataset + '_activation.npy'
-model_save_name = args.arch + '_' + args.dataset + '_state_dict.pth'
+model_save_name = args.arch + '_' + args.dataset + '_state_dict_.pth'
 
 data_path = './raw/'  # dataset path
 
@@ -27,6 +27,8 @@ if __name__ == '__main__':
         ann = VGG16(relu_th)
     elif args.arch == 'ResNet20':
         ann = ResNet20(relu_th)
+    elif args.arch == 'SimpleMLP':
+        ann = SimpleMLP(relu_th)
     else:
         ann = CIFARNet(relu_th)
     ann.to(device)
@@ -79,6 +81,8 @@ if __name__ == '__main__':
         snn = VGG16_spiking(ann.max_active, ann)
     elif args.arch == 'ResNet20':
         snn = ResNet20spike(ann)
+    elif args.arch == 'SimpleMLP':
+        snn = SimpleMLP_spiking(ann.max_active, ann)
     else:
         snn = CIFARNet_spiking(ann.thresh_list, ann)
     snn.to(device)
